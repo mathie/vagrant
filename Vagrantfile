@@ -13,9 +13,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     provider.vmx['memsize'] = 2048
     provider.vmx['numvcpus'] = 4
   end
-  
-  config.vm.network "forwarded_port", guest: 2375, host: 2375
-  config.vm.network "forwarded_port", guest:   80, host: 8080
+
+  # Share my entire home directory, so I can share various things with
+  # individual docker containers.
+  config.vm.synced_folder ENV['HOME'], '/mnt'
 
   config.vm.provision :shell, inline: <<-SHELL
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
