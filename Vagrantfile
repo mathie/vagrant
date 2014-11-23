@@ -5,6 +5,8 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.hostname = 'docker.local'
+
   config.vm.box = "phusion/ubuntu-14.04-amd64"
 
   config.vm.provider "vmware_fusion" do |provider|
@@ -20,8 +22,8 @@ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 36A1D7869
 echo 'deb https://get.docker.io/ubuntu docker main' > /etc/apt/sources.list.d/docker.list
 
 apt-get update
-apt-get dist-upgrade -u -y
-apt-get install -y lxc-docker
+apt-get dist-upgrade -u -y -qq
+apt-get install -qq -y lxc-docker avahi-daemon
 apt-get autoremove --purge -y
 
 adduser vagrant docker
